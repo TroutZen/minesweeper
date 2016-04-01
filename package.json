@@ -1,0 +1,30 @@
+{
+  "name": "moodi",
+  "version": "1.0.0",
+  "description": "Quantified Self for Moody People",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TroutZen/moodi.git"
+  },
+  "keywords": [
+    "mood",
+    "quantified",
+    "self",
+    "happiness",
+    "emotions"
+  ],
+  "author": "Devin J. Otway",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TroutZen/moodi/issues"
+  },
+  "homepage": "https://github.com/TroutZen/moodi#readme",
+  "devDependencies": {
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
