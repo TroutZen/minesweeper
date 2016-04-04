@@ -2,10 +2,20 @@
 var path = require('path');
 
 module.exports = {
-	entry: './src/app.js',
+	// set entry context relative to the js dir
+	context: path.resolve('js'),
+	entry: './app.js',
 	output: {
-		filename: 'dist/src/bundle.js'
+		path: path.resolve('build/js'),
+		// where js assets are served from
+		publicPath: 'public/assets/js',
+		filename: 'bundle.js'
 	},
+
+	devServer: {
+		contentBase: 'public'
+	},
+
 	watch: true,
 	module: {
 		loaders: [
