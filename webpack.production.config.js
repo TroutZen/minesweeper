@@ -5,7 +5,7 @@ var stripLoader = {
 	exclude: '/node_modules/',
 	// strips out specific code snippets
 	loader: strip.loader('console.log')
-}
+};
 
 devConfig.module.loaders.push(stripLoader);
 
