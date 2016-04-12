@@ -1,4 +1,5 @@
 import React from 'react'
+import {Board, Node} from '../utils/Board'
 
 export class Game extends React.Component {
 
@@ -7,7 +8,11 @@ export class Game extends React.Component {
 		this.state = {
 			size: 10,
 			minesLeft: 10,
-			timer: 0
+			timer: 0,
+			// graph of interconnected cells
+			board: null,
+			// map of rowcol ('00' for 0th row, 0th col) to nodes
+			index: {}
 		}
 
 		this._timerId;
@@ -20,7 +25,59 @@ export class Game extends React.Component {
 			})
 		}
 		, 1000)
+	}
+
+	createGame() {
+		let indices = createIndices()
+		let mineLocations = chooseBombIndices()
+		mineLocations.forEach((location)=>{
+			indices[location] = new Node('mine')
+		})
+
+		for (let [location, node] of indices) {
+			if (!node) {
+				indices[location] = new Node('blank')
+			}
+		}
+	}
+
+	createBoard() {
 		
+	}
+
+	createIndices(size) {
+		let indices = {}
+		let row, col = 0
+
+		for (; i < size; i++) {
+			for (; j < size; j++) {
+				indices['' + i + j] = void 0
+			}
+		}
+
+		return indices
+	}
+
+	chooseMineIndices(size) {
+		let count = 0
+		let indices = {}
+		let indicesArray = []
+		while (count < size) {
+			chooseIndex()
+			count++
+		}
+
+		function chooseIndex() {
+			let row = Math.floor(Math.random(size))
+			let col = Math.floor(Math.random(size))
+			if (!indices['' + row + col]) {
+				indicesArray.push('' + row + col)
+			} else {
+				chooseIndex()
+			}
+		}
+
+		return indicesArray
 	}
 
 	resetTimer() {
@@ -31,8 +88,8 @@ export class Game extends React.Component {
 	}
 
 	buildTableRow(size) {
-		var tableCells = [];
-		for (var i = 0; i < size; i++) {
+		let tableCells = [];
+		for (let i = 0; i < size; i++) {
 			// tableCells.push(<Cell className="ms-cell" key={i}></Cell>)
 			tableCells.push(<td className="ms-cell" key={i}></td>)
 		}
@@ -43,6 +100,12 @@ export class Game extends React.Component {
 			</tr>
 
 		)
+	}
+
+	buildTableRows(size) {
+		return new Array(size).fill(null).map(()=>{
+			return this.buildTableRow(size)
+		})
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -66,7 +129,7 @@ export class Game extends React.Component {
 				</div>	
 				<table>
 					<tbody>
-						{this.buildTableRow(this.state.size)}
+						{this.buildTableRows(this.state.size)}
 					</tbody>
 				</table>		
 			</div>	
