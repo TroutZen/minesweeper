@@ -1,7 +1,27 @@
-import './login.js';
+import React, { Component } from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { Game } from './components/game'
 
-document.write('app');
-document.write('meow');
+// need to define the app component within containers
+// import App from './containers/App';
+// import configureStore from './store/configureStore';
+// import sass from source`
 
-console.log('moew');
-console.log('app');
+// const store = configureStore();
+
+
+// app needs to have state newGame and then board component will reinitialize with a default board state
+class App extends Component {
+	render() {
+		return (
+			<div>
+				<h1>Mine Sweeper</h1>
+				<Game isNew="true"></Game>
+			</div>
+
+		)
+	}
+}
+
+render(<App/>, document.getElementById('root'))

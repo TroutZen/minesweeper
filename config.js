@@ -1,5 +1,5 @@
-var devConfig = require('../webpack.config.js');
-var prodConfig = require('../webpack.production.config.js');
+var devConfig = require('./webpack.config.js');
+var prodConfig = require('./webpack.production.config.js');
 
 module.exports = function(environment) {
 	switch(environment) {

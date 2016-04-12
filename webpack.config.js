@@ -1,10 +1,26 @@
+var path = require('path');
+var webpack = require('webpack');
+
 module.exports = {
-	entry: './app.js',
+	context: __dirname + '/src',
+	entry: ['webpack-hot-middleware/client', './app.js'],
 	output: {
-		filename: 'dist/src/bundle.js'
+		path: __dirname + '/public/',
+		filename: 'bundle.js'
 	},
 	watch: true,
+	plugins: [
+	    new webpack.optimize.OccurenceOrderPlugin(), // Webpack 1.0
+	    new webpack.HotModuleReplacementPlugin(),
+	    new webpack.NoErrorsPlugin()
+	],
 	module: {
-		loaders: []
+		loaders: [
+			{
+				test: /\.js$/,
+		        loaders: [ 'babel' ],
+		        exclude: /node_modules/
+			}
+		]
 	}
 }
