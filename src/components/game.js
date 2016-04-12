@@ -9,6 +9,25 @@ export class Game extends React.Component {
 			minesLeft: 10,
 			timer: 0
 		}
+
+		this._timerId;
+	}
+
+	incrementTimer() {
+		this._timerId = setInterval(() => {
+			this.setState({
+				timer: ++this.state.timer
+			})
+		}
+		, 1000)
+		
+	}
+
+	resetTimer() {
+		clearInterval(this._timerId)
+		this.setState({
+			timer: 0
+		})
 	}
 
 	buildTableRow(size) {
@@ -24,6 +43,18 @@ export class Game extends React.Component {
 			</tr>
 
 		)
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.isNew) {
+			this.incrementTimer()	
+		} else {
+			this.resetTimer()
+		}
+	}
+
+	componentDidMount() {
+		
 	}
 
 	render() {

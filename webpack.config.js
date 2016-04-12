@@ -9,6 +9,7 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 	watch: true,
+	devtool: 'source-map',
 	plugins: [
 	    new webpack.optimize.OccurenceOrderPlugin(), // Webpack 1.0
 	    new webpack.HotModuleReplacementPlugin(),
