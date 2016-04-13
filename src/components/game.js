@@ -1,5 +1,5 @@
 import React from 'react'
-import {Board, Node} from '../utils/Board'
+import {Board, Tile} from '../utils/Board'
 
 export class Game extends React.Component {
 
@@ -31,12 +31,12 @@ export class Game extends React.Component {
 		let indices = createIndices()
 		let mineLocations = chooseBombIndices()
 		mineLocations.forEach((location)=>{
-			indices[location] = new Node('mine')
+			indices[location] = new Tile('mine')
 		})
 
 		for (let [location, node] of indices) {
 			if (!node) {
-				indices[location] = new Node('blank')
+				indices[location] = new Tile('blank')
 			}
 		}
 	}
