@@ -6,14 +6,14 @@ let cellTypes = {
 }
 
 export class Tile {
-	constructor(cellType, row, col) {
-		this.id = '' + row + col
+	constructor(cellType, location) {
+		this.id = location
 		this.edges = []
-		this.row = null
-		this.col = null
-		this.isVisible = false
+		this.row = parseInt(location.substr(0,1))
+		this.col = parseInt(location.substr(1,2))
+		this.checked = false
 		// initialized to value of 0 and set when game state is initialized
-		this.adjacentMines = 0	
+		this.adjacentMines = 0
 
 		switch(cellType) {
 			case cellTypes.MINE:
@@ -42,12 +42,15 @@ export class Tile {
 	}
 
 	check() {
-		this.isVisible = true
+		this.checked = true
 		if (this.type === cellTypes.MINE) {
 			return 'GAME_OVER'
 		} else if (this.adjacentMines > 0) {
 			this.edges.forEach((edge)=>{
-				check()
+				// only check those tiles that have been been checked yet
+				if (!edge.checked) {
+					edge.check()
+				}
 			})
 		}
 	}
@@ -56,7 +59,7 @@ export class Tile {
  export class Board {
 	constructor(size){
 		this.nodes = [];
-		this.index = {}
+		this.index = {} // map of rowcol ('00' for 0th row, 0th col) to nodes
 		this.size = size
 	}
 
@@ -65,6 +68,7 @@ export class Tile {
 	}
 
 	addEdge(startId, endId) {
+		debugger;
 		let startNode = this.find(startId)
 		let endNode = this.find(endId)
 
@@ -78,40 +82,42 @@ export class Tile {
 		this.nodes.push(node)
 	}
 
-	copy() {
-		return JSON.parse(JSON.stringify(this))
-	}
-
-	createGame() {
-		this.index = createIndices()
-		let mineLocations = chooseMineIndices()
+	initBoard() {
+		let index = this.index = this.createIndices()
+		let mineLocations = this.chooseMineIndices()
 
 		// add mines to randomly assigned locations
 		mineLocations.forEach((location)=>{
-			mine = new Tile('mine')
-			this.index[location] = mine
+			let mine = new Tile('mine', location)
+			index[location] = mine
 			this.addNode(mine)
 		})
 
 		// fill in gaps with blank tiles (no mines)
-		for (let [location, node] of this.index) {
+		_.each(index, (node, location)=>{
 			if (!node) {
-				this.index[location] = new Tile('blank')
+				let tile = new Tile('blank', location)
+				index[location] = tile
+				this.addNode(tile)
 			}
-		}
+		})
 
 		// connect all nodes to their adjacent nodes
-		for (let [location, node] of this.index) {
+		_.each(index, function(node, location){
 			let row = parseInt(location.substr(0,1))
 			let col = parseInt(location.substr(1,2))
-			let adjacentNodes = getAdjacentNodes(row, col)
+			let adjacentNodes = this.getAdjacentNodes(row, col)
+			debugger;
 			adjacentNodes.forEach((adjacentNode)=>{
 				this.addEdge(node, adjacentNode)
 			})
-		}
+		}.bind(this))
+
+		return this
 	}
 
 	getAdjacentNodes(row, col) {
+		let origin = '' + row + col
 		let r0 = row
 		let r1 = row - 1 
 		let r2 = row + 1
@@ -122,23 +128,27 @@ export class Tile {
 		let c2 = col + 1
 		let cols = [c0, c1, c2]
 
-		return generateCoordList()
+		return generateCoordList.call(this)
 
 		function generateCoordList() {
-
+			let size = this.size
 			let coordList = []
 
-			let rowsNew = _.reject(rows, (row)=>{
-				return row < 0 || row > this.size - 1
+			let adjRows = _.reject(rows, (row)=>{
+				return row < 0 || row > size - 1
 			})
 
-			let colsNew = _.reject(cols, (col)=>{
-				return col < 0 || row > this.size - 1
+			let adjCols = _.reject(cols, (col)=>{
+				return col < 0 || row > size - 1
 			})
 
-			rowsNew.forEach((row)=>{
-				colsNew.forEach((col)=>{
-					coordList.push([row, col])
+			adjRows.forEach((adjRow)=>{
+				adjCols.forEach((adjCol)=>{
+					let location = '' + adjRow + adjCol
+					// need to exclude origin from adjacent nodes
+					if (location !== origin) {
+						coordList.push(location)	
+					}
 				})
 			})
 
@@ -148,13 +158,6 @@ export class Tile {
 		}
 	}
 
-	printNodes() {
-		let i = 0, l = this.nodes.length
-		for (; i < l; i++) {
-			console.log(this.nodes[i].id + ':')
-			console.log(this.nodes[i].edges)
-		}
-	}
 
 	chooseMineIndices() {
 		let size = this.size
@@ -179,18 +182,34 @@ export class Tile {
 		return indicesArray
 	}
 
+
 	createIndices() {
 		let size = this.size
 		let indices = {}
-		let row, col = 0
-
-		for (; i < size; i++) {
-			for (; j < size; j++) {
-				indices['' + i + j] = void 0
+	
+		for (let row = 0; row < size; row++) {
+			for (let col = 0; col < size; col++) {
+				console.log(row + col)
+				indices['' + row + col] = void 0
 			}
 		}
 
 		return indices
+	}
+
+	getTiles(){
+		// return new copy of the nodes to pass as state to the UI
+		return this.nodes.map((node)=>{
+			return Object.assign({}, node)
+		})	
+	}
+
+	printNodes() {
+		let i = 0, l = this.nodes.length
+		for (; i < l; i++) {
+			console.log(this.nodes[i].id + ':')
+			console.log(this.nodes[i].edges)
+		}
 	}
 }
 

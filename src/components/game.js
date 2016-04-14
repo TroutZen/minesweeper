@@ -1,21 +1,23 @@
 import React from 'react'
 import {Board, Tile} from '../utils/Board'
+import {gameStates} from '../constants/gameStates'
 
 export class Game extends React.Component {
 
 	constructor(props) {
 		super(props)
-		this.state = {
-			size: 10,
-			minesLeft: 10,
-			timer: 0,
-			// graph of interconnected cells
-			board: new Board(),
-			// map of rowcol ('00' for 0th row, 0th col) to nodes
-			index: {}
-		}
 
-		this._timerId;
+		this._timerId
+		// graph of interconnected cells
+		this._board = new Board(props.size).initBoard()
+
+		this.state = {
+			size: props.size,
+			minesLeft: props.size,
+			timer: 0,
+			state: gameStates.newGame,
+			tiles: this._board.getTiles()
+		}
 	}
 
 	incrementTimer() {
@@ -27,12 +29,13 @@ export class Game extends React.Component {
 		, 1000)
 	}
 
-	// updateBoardState({}){
-	// 	this.setState(Object.assign({}, this.state.board, newState))
-	// }
-
-	createBoard() {
-		
+	clickHandler(event, location) {
+		let board = this._board
+		let node = board[index]
+		node.check()
+		this.setState({
+			tiles: board.getTiles()	
+		})
 	}
 
 	resetTimer() {
@@ -64,8 +67,8 @@ export class Game extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.isNew) {
-			this.incrementTimer()	
+		if(nextProps.newGame) {
+			this.incrementTimer()
 		} else {
 			this.resetTimer()
 		}
