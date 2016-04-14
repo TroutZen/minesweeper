@@ -9,6 +9,7 @@ export class Tile {
 	constructor(cellType, location) {
 		this.id = location
 		this.edges = []
+		this.index = {}
 		this.row = parseInt(location.substr(0,1))
 		this.col = parseInt(location.substr(1,2))
 		this.checked = false
@@ -28,6 +29,7 @@ export class Tile {
 
 	addEdge(tile) {
 		this.edges.push(tile)
+		this.index[tile.id] = true
 	}
 
 	countAdjacentMines(){
@@ -41,18 +43,25 @@ export class Tile {
 		return count
 	}
 
+	isMine(){
+		return this.type === cellTypes.MINE ? true : false
+	}
+
 	check() {
+		// count of how many tiles have been checked (used to track win condition)
+		let count = 1
 		this.checked = true
-		if (this.type === cellTypes.MINE) {
-			return 'GAME_OVER'
-		} else if (this.adjacentMines > 0) {
+		if (this.adjacentMines > 0) {
 			this.edges.forEach((edge)=>{
 				// only check those tiles that have been been checked yet
 				if (!edge.checked) {
+					count++
 					edge.check()
 				}
 			})
 		}
+
+		return count
 	}
 }
 
@@ -68,13 +77,19 @@ export class Tile {
 	}
 
 	addEdge(startId, endId) {
-		debugger;
-		let startNode = this.find(startId)
-		let endNode = this.find(endId)
+		let startNode = this.index[startId]
+		let endNode = this.index[endId]
 
 		if (startNode && endNode) {
-			startNode.addEdge(endNode)
-			endNode.addEdge(startNode)
+			// prevent adding of redundant edges if already exists
+			if(!startNode.index[endId] && !endNode.index[startId]) {
+				startNode.addEdge(endNode)
+				endNode.addEdge(startNode)
+
+				if (endNode.type === cellTypes.MINE) {
+					startNode.adjacentMines++
+				}
+			}
 		}
 	}
 
@@ -107,9 +122,8 @@ export class Tile {
 			let row = parseInt(location.substr(0,1))
 			let col = parseInt(location.substr(1,2))
 			let adjacentNodes = this.getAdjacentNodes(row, col)
-			debugger;
 			adjacentNodes.forEach((adjacentNode)=>{
-				this.addEdge(node, adjacentNode)
+				this.addEdge(node.id, adjacentNode)
 			})
 		}.bind(this))
 
@@ -152,9 +166,7 @@ export class Tile {
 				})
 			})
 
-			return coordList.map((coords)=>{
-				return coords.join('')
-			})
+			return coordList
 		}
 	}
 
@@ -173,6 +185,7 @@ export class Tile {
 			let row = Math.floor(Math.random() * size)
 			let col = Math.floor(Math.random() * size)
 			if (!indices['' + row + col]) {
+				indices['' + row + col] = true
 				indicesArray.push('' + row + col)
 			} else {
 				chooseIndex()
@@ -199,9 +212,11 @@ export class Tile {
 
 	getTiles(){
 		// return new copy of the nodes to pass as state to the UI
-		return this.nodes.map((node)=>{
-			return Object.assign({}, node)
-		})	
+		return Object.assign([], this.nodes)
+	}
+
+	getIndex() {
+		return Object.assign({}, this.index)
 	}
 
 	printNodes() {

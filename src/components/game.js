@@ -9,14 +9,14 @@ export class Game extends React.Component {
 
 		this._timerId
 		// graph of interconnected cells
-		this._board = new Board(props.size).initBoard()
+		this._board = null;
 
 		this.state = {
 			size: props.size,
-			minesLeft: props.size,
+			flagsLeft: props.size,
 			timer: 0,
 			state: gameStates.newGame,
-			tiles: this._board.getTiles()
+			index: this._board.getIndex()
 		}
 	}
 
@@ -29,12 +29,18 @@ export class Game extends React.Component {
 		, 1000)
 	}
 
-	clickHandler(event, location) {
+	checkTile(location) {
 		let board = this._board
 		let node = board[index]
-		node.check()
+		
+		if (node.isMine()) {
+			this.props.triggerGameOver()
+		} else {
+			node.check()	
+		}
+
 		this.setState({
-			tiles: board.getTiles()	
+			index: board.getIndex()
 		})
 	}
 
@@ -56,7 +62,6 @@ export class Game extends React.Component {
 			<tr>
 				{tableCells}
 			</tr>
-
 		)
 	}
 
@@ -69,20 +74,18 @@ export class Game extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.newGame) {
 			this.incrementTimer()
+			// initialize board when user selects new game
+			this._board = new Board(props.size).initBoard()
 		} else {
 			this.resetTimer()
 		}
-	}
-
-	componentDidMount() {
-		
 	}
 
 	render() {
 		return (
 			<div className="game-container">
 				<div>
-					<div>{this.state.minesLeft}</div>
+					<div>{this.state.flagsLeft}</div>
 					<div>{this.state.timer}</div>
 				</div>	
 				<table>
