@@ -57,7 +57,7 @@ export class Game extends React.Component {
 		for (let i = 0; i < size; i++) {
 			let colNum = i;
 			let location = '' + rowNum + colNum
-			tiles.push(<BoardTile className="ms-cell" key={i} index={this.state.index} location={location}></BoardTile>)
+			tiles.push(<BoardTile key={i} index={this.state.index} location={location} checkTile={this.checkTile.bind(this)}></BoardTile>)
 		}
 
 		return (

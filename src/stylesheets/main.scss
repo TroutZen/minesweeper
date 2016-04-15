@@ -1,0 +1,53 @@
+$white: #fff;
+
+.mc-uncovered {
+	background-color: white;
+	border: 1px solid #ddd;
+}
+
+.mc-covered {
+	border: 1px solid #ddd;
+	background-color: black;
+	height: 30px;
+	width: 30px;
+}
+
+.mc-1 {
+	@extend .mc-uncovered;
+}
+
+.mc-2 {
+	@extend .mc-uncovered;	
+}
+
+.mc-3 {
+	@extend .mc-uncovered;
+}
+
+.mc-4 {
+	@extend .mc-uncovered;
+}
+
+.mc-5 {
+	@extend .mc-uncovered;
+}
+
+.mc-6 {
+	@extend .mc-uncovered;
+}
+
+.mc-7 {
+	@extend .mc-uncovered;
+}
+
+.mc-8 {
+	@extend .mc-uncovered;
+}
+
+.mc-blank {
+	@extend .mc-uncovered;
+}
+
+.mc-mine {
+	background-color: red;
+}

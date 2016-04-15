@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames';
 
 export class BoardTile extends React.Component {
 	constructor(props) {
@@ -16,10 +17,27 @@ export class BoardTile extends React.Component {
 	}
 
 	checkTile(event) {
-		
+		this.setState({
+			checked: true
+		})
 	}
 
 	render() {
-		return <td onClick={this.checkTile.bind(this)}>meow</td>
+		let prefix = 'mc-'
+		let clazz = ''
+		let adjacentMines = ''
+
+		if (!this.state.checked) {
+			clazz = prefix + 'covered'
+		} else {
+			if (this.state.type === 'mine') {
+				clazz = prefix + 'mine'
+			} else {
+				clazz = prefix + this.state.adjacentMines
+				adjacentMines = this.state.adjacentMines
+			}
+		}
+
+		return <td onClick={this.checkTile.bind(this)} className={clazz}>{adjacentMines}</td>
 	}
 }

@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { Game } from './components/game'
 import { Board, Tile } from './utils/Board'
 import { gameStates } from './constants/gameStates'
+require('./stylesheets/main.scss')
 
 // need to define the app component within containers
 // import App from './containers/App';
