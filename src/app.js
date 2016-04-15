@@ -5,11 +5,6 @@ import { Board, Tile } from './utils/Board'
 import { gameStates } from './constants/gameStates'
 require('./stylesheets/main.scss')
 
-// need to define the app component within containers
-// import App from './containers/App';
-// import sass from source
-
-// app needs to have state newGame and then board component will reinitialize with a default board state
 class App extends Component {
 
 	constructor(props){
@@ -46,9 +41,7 @@ class App extends Component {
 		alert('You Win!');
 	}
 
-	// used by game component to change app state
 	triggerGameOver(){
-		// this.endGame()
 		alert('Game Ova!')
 	}
 
