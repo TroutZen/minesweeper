@@ -16,10 +16,8 @@ export class BoardTile extends React.Component {
 		}
 	}
 
-	checkTile(event) {
-		this.setState({
-			checked: true
-		})
+	checkTile() {
+		this.props.checkTile(this.state.id)
 	}
 
 	render() {

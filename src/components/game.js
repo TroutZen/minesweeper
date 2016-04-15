@@ -32,7 +32,7 @@ export class Game extends React.Component {
 
 	checkTile(location) {
 		let board = this._board
-		let node = board[index]
+		let node = this.state.index[location]
 		
 		if (node.isMine()) {
 			this.props.triggerGameOver()
@@ -40,6 +40,7 @@ export class Game extends React.Component {
 			node.check()	
 		}
 
+		
 		this.setState({
 			index: board.getIndex()
 		})

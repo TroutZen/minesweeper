@@ -38,17 +38,21 @@ class App extends Component {
 	endGame() {
 		this.setState({
 			newGame: false,
-			gameOver: true,
+			gameOver: true
 		})
 	}
 
 	// used by game component to change app state
 	triggerGameOver(){
-		alert('Game Ova!')
 		this.endGame()
+		alert('Game Ova!')
 	}
 
 	render() {
+		// if gameOver is true,
+		// show modal with game over
+		// onclick game over resetGame()
+
 		let button;
 		if (!this.state.newGame) {
 			button = <div className="btn-start-game" onClick={this.startGame.bind(this)}>Start Game</div>
