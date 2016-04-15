@@ -85,10 +85,11 @@ export class Tile {
 			if(!startNode.index[endId] && !endNode.index[startId]) {
 				startNode.addEdge(endNode)
 				endNode.addEdge(startNode)
+			}
 
-				if (endNode.type === cellTypes.MINE) {
-					startNode.adjacentMines++
-				}
+			// however still increment if node is a mine
+			if (endNode.type === cellTypes.MINE) {
+				startNode.adjacentMines++
 			}
 		}
 	}
@@ -193,6 +194,7 @@ export class Tile {
 		}
 
 		return indicesArray
+		// return ["81", "48", "50", "34", "62", "90", "63", "76", "66", "65"]
 	}
 
 
