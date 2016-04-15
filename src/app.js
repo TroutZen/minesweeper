@@ -53,12 +53,7 @@ class App extends Component {
 		// show modal with game over
 		// onclick game over resetGame()
 
-		let button;
-		if (!this.state.newGame) {
-			button = <div className="btn-start-game" onClick={this.startGame.bind(this)}>Start Game</div>
-		} else {
-			button = <div className="btn-new-game" onClick={this.resetGame.bind(this)}>New Game</div>
-		}
+		let button = <div className="btn-new-game" onClick={this.resetGame.bind(this)}>New Game</div>
 
 		return (
 			<div>

@@ -40,7 +40,7 @@ export class Game extends React.Component {
 			node.check()	
 		}
 
-		
+
 		this.setState({
 			index: board.getIndex()
 		})
@@ -62,7 +62,7 @@ export class Game extends React.Component {
 		}
 
 		return (
-			<tr>
+			<tr key={rowNum}>
 				{tiles}
 			</tr>
 		)
@@ -79,7 +79,7 @@ export class Game extends React.Component {
 		if(nextProps.newGame) {
 			this.incrementTimer()
 			// initialize board when user selects new game
-			this._board = new Board(props.size).initBoard()
+			this._board = new Board(this.props.size).initBoard()
 		} else {
 			this.resetTimer()
 		}
