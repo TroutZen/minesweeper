@@ -1,7 +1,7 @@
 import React from 'react'
 import {Board, Tile} from '../utils/Board'
 import {gameStates} from '../constants/gameStates'
-import {BoardTile} from './components/boardTile.js'
+import {BoardTile} from './boardTile'
 
 export class Game extends React.Component {
 
@@ -57,7 +57,7 @@ export class Game extends React.Component {
 		for (let i = 0; i < size; i++) {
 			let colNum = i;
 			let location = '' + rowNum + colNum
-			tiles.push(<Tile className="ms-cell" key={i} index={this.state.index} location={location}></Tile>)
+			tiles.push(<BoardTile className="ms-cell" key={i} index={this.state.index} location={location}></BoardTile>)
 		}
 
 		return (
