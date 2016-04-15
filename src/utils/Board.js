@@ -56,7 +56,7 @@ export class Tile {
 				// only check those tiles that have been been checked yet
 				if (!edge.checked) {
 					count++
-					edge.check()
+					count+= edge.check()
 				}
 			})
 		}

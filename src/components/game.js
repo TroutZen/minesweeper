@@ -17,7 +17,8 @@ export class Game extends React.Component {
 			flagsLeft: props.size,
 			timer: 0,
 			gameState: gameStates.newGame,
-			index: this._board.getIndex()
+			index: this._board.getIndex(),
+			checksRemaining: props.size * props.size
 		}
 	}
 
@@ -30,6 +31,16 @@ export class Game extends React.Component {
 		, 1000)
 	}
 
+	triggerWin(){
+		this.props.triggerWin()
+	}
+
+	checkWin(numChecks) {
+		if (this.state.checksRemaining - numChecks === 0) {
+			this.triggerWin()
+		}
+	}
+
 	checkTile(location) {
 		let board = this._board
 		let node = this.state.index[location]
@@ -37,9 +48,13 @@ export class Game extends React.Component {
 		if (node.isMine()) {
 			this.props.triggerGameOver()
 		} else {
-			node.check()	
-		}
+			let numChecks = node.check()
 
+			// can optimize to not render when this alone changes
+			this.setState({
+				checksRemaining: this.state.checksRemaining - numChecks
+			})
+		}
 
 		this.setState({
 			index: board.getIndex()
@@ -90,7 +105,7 @@ export class Game extends React.Component {
 			<div className="game-container">
 				<div>
 					<div>{this.state.flagsLeft}</div>
-					<div>{this.state.timer}</div>
+					{/*<div>{this.state.timer}</div>*/} 
 				</div>	
 				<table>
 					<tbody>

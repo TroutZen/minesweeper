@@ -42,9 +42,13 @@ class App extends Component {
 		})
 	}
 
+	triggerWin(){
+		alert('You Win!');
+	}
+
 	// used by game component to change app state
 	triggerGameOver(){
-		this.endGame()
+		// this.endGame()
 		alert('Game Ova!')
 	}
 
@@ -59,7 +63,7 @@ class App extends Component {
 			<div>
 				<h1>Mine Sweeper</h1>
 				{button}		
-				<Game newGame={this.state.newGame} size={this.state.size || 10} triggerGameOver={this.triggerGameOver.bind(this)} board={this.state.board}></Game>
+				<Game newGame={this.state.newGame} size={this.state.size || 10} triggerGameOver={this.triggerGameOver.bind(this)} board={this.state.board} triggerWin={this.triggerWin.bind(this)}></Game>
 			</div>
 
 		)

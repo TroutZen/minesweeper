@@ -1,53 +1,68 @@
 $white: #fff;
 
+table {
+	border: 1px solid #ddd;
+}
+
 .mc-base {
 	background-color: white;
 	border: 1px solid #ddd;
 	height: 30px;
 	width: 30px;
+	text-align: center;
 }
 
 .mc-covered {
 	@extend .mc-base;
-	border: 1px solid #ddd;
-	background-color: black;
+	border: 1px solid #ccc;
+	background-color: #ddd;
+}
+
+.mc-0 {
+	@extend .mc-base;
+	opacity: 0;
 }
 
 .mc-1 {
 	@extend .mc-base;
+	color: blue;
 }
 
 .mc-2 {
-	@extend .mc-base;	
+	@extend .mc-base;
+	color: green;
 }
 
 .mc-3 {
 	@extend .mc-base;
+	color: red;
 }
 
 .mc-4 {
 	@extend .mc-base;
+	color: darken(blue, 20%);
 }
 
 .mc-5 {
 	@extend .mc-base;
+	color: maroon;
 }
 
 .mc-6 {
 	@extend .mc-base;
+	color: darken(green, 20%);
 }
 
 .mc-7 {
 	@extend .mc-base;
+	color: darken(red, 20%);
 }
 
 .mc-8 {
 	@extend .mc-base;
+	color: brown;
 }
 
-.mc-blank {
-	@extend .mc-base;
-}
 
 .mc-mine {
 	@extend .mc-base;
