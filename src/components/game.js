@@ -1,21 +1,22 @@
 import React from 'react'
 import {Board, Tile} from '../utils/Board'
 import {gameStates} from '../constants/gameStates'
+import {BoardTile} from './components/boardTile.js'
 
 export class Game extends React.Component {
 
 	constructor(props) {
 		super(props)
-
+		let Board = props.board
+		
 		this._timerId
-		// graph of interconnected cells
-		this._board = null;
+		this._board = new Board(props.size).initBoard() // graph of interconnected cells
 
 		this.state = {
 			size: props.size,
 			flagsLeft: props.size,
 			timer: 0,
-			state: gameStates.newGame,
+			gameState: gameStates.newGame,
 			index: this._board.getIndex()
 		}
 	}
@@ -51,26 +52,28 @@ export class Game extends React.Component {
 		})
 	}
 
-	buildTableRow(size) {
-		let tableCells = [];
+	buildTableRow(size, rowNum) {
+		let tiles = [];
 		for (let i = 0; i < size; i++) {
-			// tableCells.push(<Cell className="ms-cell" key={i}></Cell>)
-			tableCells.push(<td className="ms-cell" key={i}></td>)
+			let colNum = i;
+			let location = '' + rowNum + colNum
+			tiles.push(<Tile className="ms-cell" key={i} index={this.state.index} location={location}></Tile>)
 		}
 
 		return (
 			<tr>
-				{tableCells}
+				{tiles}
 			</tr>
 		)
 	}
 
 	buildTableRows(size) {
-		return new Array(size).fill(null).map(()=>{
-			return this.buildTableRow(size)
+		return new Array(size).fill(null).map((val, index)=>{
+			return this.buildTableRow(size, index)
 		})
 	}
 
+	// not called for initial render
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.newGame) {
 			this.incrementTimer()

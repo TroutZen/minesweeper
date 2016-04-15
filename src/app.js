@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Game } from './components/game'
-import {gameStates} from './constants/gameStates'
+import { Board, Tile } from './utils/Board'
+import { gameStates } from './constants/gameStates'
 
 // need to define the app component within containers
 // import App from './containers/App';
@@ -14,7 +15,8 @@ class App extends Component {
 		super(props)
 		this.state = {
 			newGame: false,
-			gameOver: false
+			gameOver: false,
+			board: Board
 		}
 	}
 
@@ -57,7 +59,7 @@ class App extends Component {
 			<div>
 				<h1>Mine Sweeper</h1>
 				{button}		
-				<Game newGame={this.state.newGame} size={this.state.size || 10} triggerGameOver={this.triggerGameOver.bind(this)}></Game>
+				<Game newGame={this.state.newGame} size={this.state.size || 10} triggerGameOver={this.triggerGameOver.bind(this)} board={this.state.board}></Game>
 			</div>
 
 		)
