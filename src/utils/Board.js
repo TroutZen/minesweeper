@@ -194,7 +194,6 @@ export class Tile {
 		}
 
 		return indicesArray
-		// return ["81", "48", "50", "34", "62", "90", "63", "76", "66", "65"]
 	}
 
 
@@ -218,6 +217,7 @@ export class Tile {
 	}
 
 	getIndex() {
+		// return a new copy of the index for constant time lookup within each tile react component
 		return Object.assign({}, this.index)
 	}
 
