@@ -35,8 +35,9 @@ export class Game extends React.Component {
 		this.props.triggerWin()
 	}
 
-	checkWin(numChecks) {
-		if (this.state.checksRemaining - numChecks === 0) {
+	checkWin() {
+		let numMines = this.state.size
+		if (this.state.checksRemaining - numMines - 1 === 0) {
 			this.triggerWin()
 		}
 	}
@@ -49,16 +50,14 @@ export class Game extends React.Component {
 			this.props.triggerGameOver()
 		} else {
 			let numChecks = node.check()
+			this.checkWin(numChecks)
 
 			// can optimize to not render when this alone changes
 			this.setState({
-				checksRemaining: this.state.checksRemaining - numChecks
+				checksRemaining: this.state.checksRemaining - numChecks,
+				index: board.getIndex()	
 			})
 		}
-
-		this.setState({
-			index: board.getIndex()
-		})
 	}
 
 	resetTimer() {
