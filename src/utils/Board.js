@@ -13,6 +13,7 @@ export class Tile {
 		this.row = parseInt(location.substr(0,1))
 		this.col = parseInt(location.substr(1,2))
 		this.checked = false
+		this.wasClicked = false
 		// initialized to value of 0 and set when game state is initialized
 		this.adjacentMines = 0
 

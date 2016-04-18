@@ -45,6 +45,7 @@ export class Game extends React.Component {
 	checkTile(location) {
 		let board = this._board
 		let node = this.state.index[location]
+		node.wasClicked = true
 		
 		if (node.isMine()) {
 			this.props.triggerGameOver()
@@ -91,21 +92,16 @@ export class Game extends React.Component {
 	// not called for initial render
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.newGame) {
-			this.incrementTimer()
-			// initialize board when user selects new game
 			this._board = new Board(this.props.size).initBoard()
-		} else {
-			this.resetTimer()
+			this.setState({
+				index: this._board.getIndex()
+			})
 		}
 	}
 
 	render() {
 		return (
 			<div className="game-container">
-				<div>
-					<div>{this.state.flagsLeft}</div>
-					{/*<div>{this.state.timer}</div>*/} 
-				</div>	
 				<table>
 					<tbody>
 						{this.buildTableRows(this.state.size)}

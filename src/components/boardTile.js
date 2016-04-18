@@ -13,15 +13,9 @@ export class BoardTile extends React.Component {
 			checked: tile.checked,
 			type: tile.type,
 			adjacentMines: tile.adjacentMines,
-			markedWithFlag: false,
-			wasClicked: false
+			wasClicked: false,
+			index: props.index
 		}
-	}
-
-	toggleClick(){
-		this.setState({
-			wasClicked: true
-		})
 	}
 
 	checkTile() {
@@ -29,17 +23,16 @@ export class BoardTile extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps){
-		let tile = this.props.index[this.state.id]
+		let tile = this.props.index[nextProps.location]
 
 		this.setState({
-			checked: tile.checked
+			id: tile.id,
+			checked: tile.checked,
+			wasClicked: tile.wasClicked,
+			type: tile.type,
+			adjacentMines: tile.adjacentMines,
+			index: nextProps.index
 		})
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if (!prevState.wasClicked && this.state.wasClicked) {
-			this.checkTile()
-		}
 	}
 
 	render() {
@@ -58,6 +51,6 @@ export class BoardTile extends React.Component {
 			}
 		}
 
-		return <td onClick={this.toggleClick.bind(this)} className={clazz}>{adjacentMines}</td>
+		return <td onClick={this.checkTile.bind(this)} className={clazz}>{adjacentMines}</td>
 	}
 }

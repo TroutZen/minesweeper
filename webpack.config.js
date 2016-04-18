@@ -14,6 +14,11 @@ module.exports = {
 	    new webpack.optimize.OccurenceOrderPlugin(), // Webpack 1.0
 	    new webpack.HotModuleReplacementPlugin(),
 	    new webpack.NoErrorsPlugin()
+	    // new webpack.ProvidePlugin({
+     //       $: "jquery",
+     //       jQuery: "jquery",
+     //       Tether: "tether"
+     //   })
 	],
 	module: {
 		loaders: [

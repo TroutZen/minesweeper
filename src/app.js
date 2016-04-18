@@ -19,42 +19,49 @@ class App extends Component {
 	startGame() {
 		this.setState({
 			newGame: true,
-			gameOver: false
+			gameOver: false,
+			didWin: false
 		}) 
-	}
-
-	resetGame() {
-		this.setState({
-			newGame: false,
-			gameOver: false
-		})
 	}
 
 	endGame() {
 		this.setState({
 			newGame: false,
-			gameOver: true
+			gameOver: true,
+			didWin: false
+		})
+	}
+
+	winGame() {
+		this.setState({
+			newGame: false,
+			gameOver: false,
+			didWin: true
 		})
 	}
 
 	triggerWin(){
-		alert('You Win!');
+		this.winGame()
 	}
 
 	triggerGameOver(){
-		alert('Game Ova!')
+		this.endGame()
 	}
 
 	render() {
-		// if gameOver is true,
-		// show modal with game over
-		// onclick game over resetGame()
+		let button = <div className="btn-new-game" onClick={this.startGame.bind(this)}>New Game</div>
+		let gameStatus = ''
 
-		let button = <div className="btn-new-game" onClick={this.resetGame.bind(this)}>New Game</div>
+		if (this.state.gameOver) {
+			gameStatus = <h2>Game Over!</h2>
+		} else if (this.state.didWin) {
+			gameStatus = <h2>You Won!</h2>
+		}
 
 		return (
 			<div>
 				<h1>Mine Sweeper</h1>
+				{gameStatus}
 				{button}		
 				<Game newGame={this.state.newGame} size={this.state.size || 10} triggerGameOver={this.triggerGameOver.bind(this)} board={this.state.board} triggerWin={this.triggerWin.bind(this)}></Game>
 			</div>
