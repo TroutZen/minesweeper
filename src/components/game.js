@@ -15,8 +15,6 @@ export class Game extends React.Component {
 		this.state = {
 			size: props.size,
 			flagsLeft: props.size,
-			timer: 0,
-			gameState: gameStates.newGame,
 			index: this._board.getIndex(),
 			checksRemaining: props.size * props.size
 		}
@@ -102,11 +100,13 @@ export class Game extends React.Component {
 	render() {
 		return (
 			<div className="game-container">
-				<table>
-					<tbody>
-						{this.buildTableRows(this.state.size)}
-					</tbody>
-				</table>		
+				<div className="board-container">
+					<table>
+						<tbody>
+							{this.buildTableRows(this.state.size)}
+						</tbody>
+					</table>
+				</div>
 			</div>	
 		)
 	}

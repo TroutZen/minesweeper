@@ -12,7 +12,8 @@ class App extends Component {
 		this.state = {
 			newGame: false,
 			gameOver: false,
-			board: Board
+			board: Board,
+			didWin: false
 		}
 	}
 
@@ -53,16 +54,18 @@ class App extends Component {
 		let gameStatus = ''
 
 		if (this.state.gameOver) {
-			gameStatus = <h2>Game Over!</h2>
+			gameStatus = <div><h2>Game Over!</h2></div>
 		} else if (this.state.didWin) {
-			gameStatus = <h2>You Won!</h2>
+			gameStatus = <div><h2>You Won!</h2></div>
 		}
 
 		return (
 			<div>
-				<h1>Mine Sweeper</h1>
+				<div className="title">
+					<h1>Mine Sweeper</h1>
+				</div>
 				{gameStatus}
-				{button}		
+				{button}
 				<Game newGame={this.state.newGame} size={this.state.size || 10} triggerGameOver={this.triggerGameOver.bind(this)} board={this.state.board} triggerWin={this.triggerWin.bind(this)}></Game>
 			</div>
 
