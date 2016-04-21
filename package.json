@@ -27,6 +27,7 @@
     "babel-preset-react": "^6.5.0",
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
+    "file-loader": "^0.8.5",
     "jshint": "^2.9.1",
     "jshint-loader": "^0.8.3",
     "node-sass": "^3.4.2",
@@ -34,12 +35,14 @@
     "sass-loader": "^3.2.0",
     "strip-loader": "^0.1.2",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.15",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "animate.css": "^3.5.1",
     "classnames": "^2.2.3",
     "core-js": "^2.2.2",
     "immutable": "^3.7.6",

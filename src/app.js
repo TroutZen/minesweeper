@@ -3,7 +3,10 @@ import { render } from 'react-dom'
 import { Game } from './components/game'
 import { Board, Tile } from './utils/Board'
 import { gameStates } from './constants/gameStates'
+import classNames from 'classnames'
+
 require('./stylesheets/main.scss')
+require('animate.css')
 
 class App extends Component {
 
@@ -49,23 +52,45 @@ class App extends Component {
 		this.endGame()
 	}
 
-	render() {
-		let button = <div className="btn-new-game" onClick={this.startGame.bind(this)}>New Game</div>
+	renderGameStatus(){
 		let gameStatus = ''
 
 		if (this.state.gameOver) {
-			gameStatus = <div><h2>Game Over!</h2></div>
+			gameStatus = <h2>Game Over!</h2>
 		} else if (this.state.didWin) {
-			gameStatus = <div><h2>You Won!</h2></div>
+			gameStatus = <h2>You Won!</h2>
 		}
+
+		return gameStatus
+	}
+
+	renderButton(){
+		let btnClass = classNames({
+			'hidden': this.props.gameOver || this.props.didWin,
+			'btn': true,
+			'new-game': true
+		})
+
+		return <button className={btnClass} onClick={this.startGame.bind(this)}>New Game</button>
+	}
+
+	render() {
+		let btn = this.renderButton()	
+		let gameStatus = this.renderGameStatus()
 
 		return (
 			<div>
-				<div className="title">
-					<h1>Mine Sweeper</h1>
-				</div>
-				{gameStatus}
-				{button}
+				<div className="header">
+					<div>
+						<h1>Mine Sweeper</h1>
+					</div>
+					<div className="game-status">
+						{gameStatus}	
+					</div>	
+					<div>
+						{btn}
+					</div>
+				</div>			
 				<Game newGame={this.state.newGame} size={this.state.size || 10} triggerGameOver={this.triggerGameOver.bind(this)} board={this.state.board} triggerWin={this.triggerWin.bind(this)}></Game>
 			</div>
 

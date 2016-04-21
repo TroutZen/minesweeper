@@ -2,13 +2,24 @@ $white: #fff;
 $black: #000;
 
 body {
-	color: $white;
-	background: $black;
+	font-size: 14px;
+	color: $black;
+	// background-image: url('./assets/outer-space.jpg');
+	background: $white;
 }
 
-.title {
+.hidden {
+	visibility: hidden;
+}
+
+.header {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.game-status {
+	height: 4em;
 }
 
 .game-container { 
