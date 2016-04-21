@@ -18,6 +18,3 @@ localhost:3000
 * add flags
 * add flags remaining
 * add space themed styling
-
-## Fix
-* board re-render not occurring on first click
