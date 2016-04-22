@@ -6,7 +6,7 @@ import { gameStates } from './constants/gameStates'
 import classNames from 'classnames'
 
 require('./stylesheets/main.scss')
-require('animate.css')
+// require('animate.css')
 
 class App extends Component {
 

@@ -16,7 +16,8 @@ export class Game extends React.Component {
 			size: props.size,
 			flagsLeft: props.size,
 			index: this._board.getIndex(),
-			checksRemaining: props.size * props.size
+			checksRemaining: props.size * props.size,
+			disableBoard: false
 		}
 	}
 
@@ -29,8 +30,20 @@ export class Game extends React.Component {
 		, 1000)
 	}
 
+	disableBoard() {
+		this.setState({
+			disableBoard: true
+		})
+	}
+
 	triggerWin(){
 		this.props.triggerWin()
+		this.disableBoard()
+	}
+
+	triggerGameOver(){
+		this.props.triggerGameOver()
+		this.disableBoard()
 	}
 
 	checkWin() {
@@ -46,7 +59,7 @@ export class Game extends React.Component {
 		node.wasClicked = true
 		
 		if (node.isMine()) {
-			this.props.triggerGameOver()
+			this.triggerGameOver()
 		} else {
 			let numChecks = node.check()
 			this.checkWin(numChecks)
@@ -71,7 +84,7 @@ export class Game extends React.Component {
 		for (let i = 0; i < size; i++) {
 			let colNum = i;
 			let location = '' + rowNum + colNum
-			tiles.push(<BoardTile key={i} index={this.state.index} location={location} checkTile={this.checkTile.bind(this)}></BoardTile>)
+			tiles.push(<BoardTile key={i} index={this.state.index} location={location} checkTile={this.checkTile.bind(this)} gameStatus={this.props.gameStatus} disableBoard={this.state.disableBoard}></BoardTile>)
 		}
 
 		return (
@@ -92,7 +105,8 @@ export class Game extends React.Component {
 		if(nextProps.newGame) {
 			this._board = new Board(this.props.size).initBoard()
 			this.setState({
-				index: this._board.getIndex()
+				index: this._board.getIndex(),
+				disableBoard: false
 			})
 		}
 	}

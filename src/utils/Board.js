@@ -172,7 +172,6 @@ export class Tile {
 		}
 	}
 
-
 	chooseMineIndices() {
 		let size = this.size
 		let count = 0

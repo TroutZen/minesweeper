@@ -15,18 +15,27 @@ export class BoardTile extends React.Component {
 		let prefix = 'mc-'
 		let clazz = ''
 		let adjacentMines = ''
+		let clickHandler = void 0
+
+		if (this.props.disableBoard) {
+			clickHandler = () => {
+				return void 0
+			}
+		} else {
+			clickHandler = this.checkTile.bind(this)
+		}
 
 		if (!tile.checked && !tile.wasClicked) {
 			clazz = prefix + 'covered'
 		} else {
 			if (tile.type === 'mine') {
-				clazz = 'em em-alien'
+				clazz = 'mc-mine em em-alien'
 			} else {
 				clazz = prefix + tile.adjacentMines
 				adjacentMines = tile.adjacentMines
 			}
 		}
 
-		return <td onClick={this.checkTile.bind(this)} className={clazz}>{adjacentMines}</td>
+		return <td onClick={clickHandler} className={clazz}>{adjacentMines}</td>
 	}
 }
