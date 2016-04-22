@@ -8,6 +8,19 @@ body {
 	background: $white;
 }
 
+.btn {
+	font-size: 1em;
+	padding: 0.25em 0.5em;
+	border: 1px solid darken(#ccc, 20%);
+	background-color: #ccc;
+	border-radius: 0.25em;
+	cursor: pointer;
+
+	&:hover {
+		background-color: lighten(#ccc, 5%)
+	}
+}
+
 .hidden {
 	visibility: hidden;
 }
@@ -18,13 +31,29 @@ body {
 	align-items: center;
 }
 
+.timer {
+	font-size: 1em;
+	height: 1em;
+	padding-right: 0.7em;
+	margin-bottom: 4px;
+	display: inline;
+	align-self: flex-end;
+}
+
 .game-status {
 	height: 4em;
 }
 
+.main-content-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .game-container { 
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .board-container {
@@ -38,8 +67,8 @@ table {
 .mc-base {
 	background-color: white;
 	border: 1px solid #ddd;
-	height: 30px;
-	width: 30px;
+	height: 2em;
+	width: 2em;
 	text-align: center;
 }
 

@@ -2,6 +2,7 @@ import React from 'react'
 import {Board, Tile} from '../utils/Board'
 import {gameStates} from '../constants/gameStates'
 import {BoardTile} from './boardTile'
+import classNames from 'classNames'
 
 export class Game extends React.Component {
 
@@ -15,6 +16,7 @@ export class Game extends React.Component {
 		this.state = {
 			size: props.size,
 			flagsLeft: props.size,
+			timer: 0,
 			index: this._board.getIndex(),
 			checksRemaining: props.size * props.size,
 			disableBoard: false
@@ -43,6 +45,7 @@ export class Game extends React.Component {
 
 	triggerGameOver(){
 		this.props.triggerGameOver()
+		// TODO: Invesitgate antipattern of settings state sequentially vs. one call with all changed props
 		this.disableBoard()
 	}
 
@@ -54,10 +57,16 @@ export class Game extends React.Component {
 	}
 
 	checkTile(location) {
+
 		let board = this._board
 		let node = this.state.index[location]
 		node.wasClicked = true
-		
+
+		// if first click, start timer	
+		if (this.state.timer === 0) {
+			this.incrementTimer()	
+		}
+
 		if (node.isMine()) {
 			this.triggerGameOver()
 		} else {
@@ -104,6 +113,7 @@ export class Game extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.newGame) {
 			this._board = new Board(this.props.size).initBoard()
+			this.resetTimer()
 			this.setState({
 				index: this._board.getIndex(),
 				disableBoard: false
@@ -112,16 +122,24 @@ export class Game extends React.Component {
 	}
 
 	render() {
+		let timerClass = classNames({
+			hidden: this.state.timer === 0,
+			timer: true
+		})
+
 		return (
-			<div className="game-container">
-				<div className="board-container">
-					<table>
-						<tbody>
-							{this.buildTableRows(this.state.size)}
-						</tbody>
-					</table>
-				</div>
-			</div>	
+			<div className="main-content-container">
+				<div className="game-container">
+					<div className={timerClass}>{this.state.timer}</div>
+					<div className="board-container">
+						<table>
+							<tbody>
+								{this.buildTableRows(this.state.size)}
+							</tbody>
+						</table>
+					</div>
+				</div>	
+			</div>
 		)
 	}
 }
