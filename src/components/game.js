@@ -9,8 +9,6 @@ export class Game extends React.Component {
 	constructor(props) {
 		super(props)
 		let Board = props.board
-		
-		this._timerId
 		this._board = new Board(props.size).initBoard() // graph of interconnected cells
 
 		this.state = {
@@ -19,17 +17,26 @@ export class Game extends React.Component {
 			timer: 0,
 			index: this._board.getIndex(),
 			checksRemaining: props.size * props.size,
-			disableBoard: false
+			disableBoard: false,
+			timerId: null
 		}
 	}
 
-	incrementTimer() {
-		this._timerId = setInterval(() => {
+	startTimer() {
+		if (this.state.timerId) {
+			this.clearTimer(this.state.timerId)
+		}
+
+		let timerId = setInterval(() => {
 			this.setState({
 				timer: ++this.state.timer
 			})
 		}
 		, 1000)
+		
+		this.setState({
+			timerId: timerId
+		})
 	}
 
 	disableBoard() {
@@ -39,11 +46,13 @@ export class Game extends React.Component {
 	}
 
 	triggerWin(){
+		this.clearTimer(this.state.timerId)
 		this.props.triggerWin()
 		this.disableBoard()
 	}
 
 	triggerGameOver(){
+		this.clearTimer(this.state.timerId)
 		this.props.triggerGameOver()
 		// TODO: Invesitgate antipattern of settings state sequentially vs. one call with all changed props
 		this.disableBoard()
@@ -56,21 +65,27 @@ export class Game extends React.Component {
 		}
 	}
 
+	wasFirstClick(numChecks) {
+		let checksRemaining = this.state.checksRemaining
+		let totalChecks = this.state.size * this.state.size
+		return (totalChecks - numChecks === checksRemaining) ? true: false
+	}
+
 	checkTile(location) {
 
 		let board = this._board
 		let node = this.state.index[location]
 		node.wasClicked = true
 
-		// if first click, start timer	
-		if (this.state.timer === 0) {
-			this.incrementTimer()	
-		}
-
 		if (node.isMine()) {
 			this.triggerGameOver()
 		} else {
 			let numChecks = node.check()
+
+			if (this.wasFirstClick) {
+				this.startTimer()
+			}
+
 			this.checkWin(numChecks)
 
 			// can optimize to not render when this alone changes
@@ -81,11 +96,8 @@ export class Game extends React.Component {
 		}
 	}
 
-	resetTimer() {
-		clearInterval(this._timerId)
-		this.setState({
-			timer: 0
-		})
+	clearTimer(timerId){
+		clearInterval(timerId)
 	}
 
 	buildTableRow(size, rowNum) {
@@ -113,10 +125,14 @@ export class Game extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.newGame) {
 			this._board = new Board(this.props.size).initBoard()
-			this.resetTimer()
+			this.clearTimer(this.state.timerId)
+
 			this.setState({
 				index: this._board.getIndex(),
-				disableBoard: false
+				disableBoard: false,
+				timer: 0,
+				checksRemaining: this.state.size * this.state.size,
+				flagsLeft: this.state.size
 			})
 		}
 	}

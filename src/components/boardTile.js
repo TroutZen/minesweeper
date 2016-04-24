@@ -17,6 +17,7 @@ export class BoardTile extends React.Component {
 		let adjacentMines = ''
 		let clickHandler = void 0
 
+		// better to unbind and then rebind, this will cause a memory leak
 		if (this.props.disableBoard) {
 			clickHandler = () => {
 				return void 0
