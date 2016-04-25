@@ -3,6 +3,9 @@ $black: #000;
 $alien-green: #86ba4e;
 $alien-green-dark: #20592c;
 $background-primary: #123440;
+$board-background-primary: #1d979a;
+$board-background-secondary: #bee4f9;
+$board-light: #62cbe9;
 
 @import url(https://fonts.googleapis.com/css?family=Fredoka+One);
 
@@ -11,8 +14,6 @@ body {
 	font-family: Fredoka One;
 	color: $white;
 	background: $background-primary;
-	// background-image: url('/assets/outer-space-2.jpg');
-	// background-size: cover;
 }
 
 .btn {
@@ -76,16 +77,21 @@ body {
 }
 
 .board-container {
-	// background-color: $white;
+	background-color: $board-background-primary;
+	border: 0.5em solid $board-background-primary;
+	border-radius: 0.25em;
 }
 
 table {
-	// border: 1px solid #ddd;
+	border-collapse: collapse;
+}
+
+td {
+	border: 1px solid lighten($board-background-secondary, 10%)
 }
 
 .mc-base {
-	background-color: white;
-	// border: 1px solid #ddd;
+	background-color: lighten($board-background-secondary, 10%);
 	height: 2em;
 	width: 2em;
 	text-align: center;
@@ -93,13 +99,12 @@ table {
 
 .mc-covered {
 	@extend .mc-base;
-	border: 1px solid #ccc;
-	background-color: #ddd;
+	background-color: $board-background-secondary;
 }
 
 .mc-0 {
 	@extend .mc-base;
-	opacity: 0;
+	color: transparent;
 }
 
 .mc-1 {
