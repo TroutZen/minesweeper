@@ -81,7 +81,7 @@ class App extends Component {
 		return (
 			<div>
 				<div className="header">
-					<div>
+					<div className="title">
 						<h1>Mine Sweeper</h1>
 					</div>
 					<div className="game-status">
