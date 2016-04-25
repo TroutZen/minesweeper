@@ -77,8 +77,22 @@ body {
 }
 
 .board-container {
-	background-color: $board-background-primary;
-	border: 0.5em solid $board-background-primary;
+	// background-color: $board-background-primary;
+	// border: 0.5em solid $board-background-primary;
+	border: 0.5em solid transparent;
+	position: relative;
+	border-radius: 0.25em;
+}
+
+.board-container:after {
+	position: absolute;
+	top: -0.5em;
+	bottom: -0.5em;
+	right: -0.5em;
+	left: -0.5em;
+	background: linear-gradient($board-background-primary, #90c74a);
+	content: '';
+	z-index: -1;
 	border-radius: 0.25em;
 }
 
@@ -87,7 +101,7 @@ table {
 }
 
 td {
-	border: 1px solid lighten($board-background-secondary, 10%)
+	border: 1px solid lighten($board-background-secondary, 10%);
 }
 
 .mc-base {
