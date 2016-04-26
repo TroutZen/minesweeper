@@ -1,6 +1,8 @@
+// TODO: export all components from index.js and import from there
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Game } from './components/game'
+import { GameStatus } from './components/gameStatus'
 import { Board, Tile } from './utils/Board'
 import { gameStates } from './constants/gameStates'
 import classNames from 'classnames'
@@ -75,8 +77,7 @@ class App extends Component {
 	}
 
 	render() {
-		let btn = this.renderButton()	
-		let gameStatus = this.renderGameStatus()
+		let btn = this.renderButton()
 
 		return (
 			<div>
@@ -84,9 +85,7 @@ class App extends Component {
 					<div className="title">
 						<h1>Mine Sweeper</h1>
 					</div>
-					<div className="game-status">
-						{gameStatus}	
-					</div>	
+					<GameStatus didWin={this.state.didWin} gameOver={this.state.gameOver} startGame={this.startGame.bind(this)}></GameStatus>
 					<div>
 						{btn}
 					</div>
