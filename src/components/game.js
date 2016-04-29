@@ -13,7 +13,7 @@ export class Game extends React.Component {
 
 		this.state = {
 			size: props.size,
-			flagsLeft: props.size,
+			flagsRemaining: props.size,
 			timer: 0,
 			index: this._board.getIndex(),
 			checksRemaining: props.size * props.size,
@@ -132,7 +132,7 @@ export class Game extends React.Component {
 				disableBoard: false,
 				timer: 0,
 				checksRemaining: this.state.size * this.state.size,
-				flagsLeft: this.state.size
+				flagsRemaining: this.state.size
 			})
 		}
 	}
@@ -146,7 +146,15 @@ export class Game extends React.Component {
 		return (
 			<div className="main-content-container">
 				<div className="game-container">
-					<div className={timerClass}>{this.state.timer}</div>
+					<div className="game-stats">
+						<div className="flags">
+							<span className="flag-count">{this.state.flagsRemaining}</span>
+							<i className="fa fa-flag"></i>
+						</div>
+						<div className={timerClass}>{this.state.timer}</div>
+					</div>
+					<div className="clear"></div>
+					
 					<div className="board-container">
 						<table>
 							<tbody>

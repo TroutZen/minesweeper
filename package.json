@@ -45,6 +45,7 @@
     "animate.css": "^3.5.1",
     "classnames": "^2.2.3",
     "core-js": "^2.2.2",
+    "font-awesome": "^4.6.1",
     "immutable": "^3.7.6",
     "jquery": "^2.2.3",
     "lodash": "^4.10.0",

@@ -8,7 +8,7 @@ import { gameStates } from './constants/gameStates'
 import classNames from 'classnames'
 
 require('./stylesheets/main.scss')
-// require('animate.css')
+require('../node_modules/font-awesome/scss/font-awesome.scss')
 
 class App extends Component {
 
