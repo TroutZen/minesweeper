@@ -166,6 +166,16 @@ td {
 	background-color: $board-background-secondary;
 }
 
+.mc-flagged {
+	@extend .mc-covered;
+
+	&:after {
+		color: $danger-red;
+		font-family: 'FontAwesome';
+		content: '\f024';
+	}
+}
+
 .mc-0 {
 	@extend .mc-base;
 	color: transparent;
