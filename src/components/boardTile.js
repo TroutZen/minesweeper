@@ -15,9 +15,18 @@ export class BoardTile extends React.Component {
 
 	rightClick(event) {
 		event.preventDefault()
-		this.setState({
-			rightClicked: !this.state.rightClicked
-		})
+		let clicked = !this.state.rightClicked
+		let adjustment =  clicked ? -1 : 1
+		let currentCount = this.props.getFlagsRemaining()
+		let adjustedCount = currentCount + adjustment
+		
+		if (adjustedCount >= 0 && adjustedCount <= this.props.size) {
+			this.props.updateFlags(adjustment)
+
+			this.setState({
+				rightClicked: clicked // only toggle flag when you are within limit of flags
+			})
+		}
 	}
 
 	handleClick(event) {
@@ -28,6 +37,10 @@ export class BoardTile extends React.Component {
 		} else {
 			this.checkTile()
 		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		console.dir(nextProps);
 	}
 
 	render() {

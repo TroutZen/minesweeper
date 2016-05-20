@@ -71,6 +71,18 @@ export class Game extends React.Component {
 		return (totalChecks - numChecks === checksRemaining) ? true: false
 	}
 
+	getFlagsRemaining() {
+		return this.state.flagsRemaining
+	}
+
+	updateFlags(adjustment) {
+		let count = this.state.flagsRemaining + adjustment
+		this.setState({
+			flagsRemaining: count
+		})
+		
+	}
+
 	checkTile(location) {
 
 		let board = this._board
@@ -105,7 +117,7 @@ export class Game extends React.Component {
 		for (let i = 0; i < size; i++) {
 			let colNum = i;
 			let location = '' + rowNum + colNum
-			tiles.push(<BoardTile key={i} index={this.state.index} location={location} checkTile={this.checkTile.bind(this)} gameStatus={this.props.gameStatus} disableBoard={this.state.disableBoard}></BoardTile>)
+			tiles.push(<BoardTile key={i} index={this.state.index} location={location} size={this.state.size} checkTile={this.checkTile.bind(this)} gameStatus={this.props.gameStatus} disableBoard={this.state.disableBoard} updateFlags={this.updateFlags.bind(this)} getFlagsRemaining={this.getFlagsRemaining.bind(this)}></BoardTile>)
 		}
 
 		return (

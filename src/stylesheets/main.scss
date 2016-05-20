@@ -100,6 +100,9 @@ body {
 	border: 0.2em solid $game-over-border;
 	height: 10em;
 	width: 40em;
+	transform: scale(0,0);
+	animation: grow 1.5s;
+	animation-fill-mode: forwards;
 	position: relative;
 	top: -4em;
 	background: $danger-red;
@@ -108,6 +111,12 @@ body {
 		font-size: 3em;
 		margin: 0;
 	}
+}
+
+@keyframes grow {
+    100% {
+        transform: scale(1,1); 
+    }
 }
 
 .game-container { 

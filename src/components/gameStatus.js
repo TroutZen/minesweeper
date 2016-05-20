@@ -4,34 +4,51 @@ import classNames from 'classNames'
 export class GameStatus extends React.Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			show: false
+		}
 	}
 
-	renderGameStatus(){	
-		let gameStatus = ''
-
-		if (this.props.gameOver) {
-			gameStatus = <h2 className='game-over'>GAME OVER</h2>
-		} else if (this.props.didWin) {
-			gameStatus = <h2 className='game-won'>YOU WON!</h2>
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.gameOver || nextProps.didWin) {
+			this.setState({
+				show: true
+			})
 		}
+	}
 
-		return gameStatus
+	handleClick() {
+		this.setState({
+			show: false
+		})
+
+		this.props.startGame()
 	}
 
 	render() {
-		let gameStatus = this.renderGameStatus()
-		let statusCtnClass = classNames({
-			'hidden': !this.props.gameOver && !this.props.didWin,
-			'game-status-container' : true
-		})
+		if (this.state.show) {
 
-		return (
-			<div className={statusCtnClass}>
-				<div className="game-status-content">
-					{gameStatus}
-					<button className="btn" onClick={this.props.startGame}>New Game</button>
-				</div>	
-			</div>
-		)
+			let gameStatus = ''
+
+			if (this.props.gameOver) {
+				gameStatus = <h2 className='game-over'>GAME OVER</h2>
+			} else if (this.props.didWin) {
+				gameStatus = <h2 className='game-won'>YOU WON!</h2>
+			}
+
+			let template =	(
+				<div className="game-status-container">
+					<div className="game-status-content">
+						{gameStatus}
+						<button className="btn" onClick={this.handleClick.bind(this)}>New Game</button>
+					</div>
+					
+				</div>
+			)
+
+			return template
+		} else {
+			return null
+		}
 	}
 }
