@@ -1,30 +1,31 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-	context: __dirname + '/src',
-	entry: ['webpack-hot-middleware/client', './app.js'],
+	entry: './src/app.js',
 	output: {
-		path: __dirname + '/public/',
+		path:  './public',
 		filename: 'bundle.js'
 	},
-	watch: true,
-	devtool: 'source-map',
+	// watch: true,
+	// devtool: 'source-map',
 	plugins: [
 	    new webpack.optimize.OccurenceOrderPlugin(), // Webpack 1.0
-	    new webpack.HotModuleReplacementPlugin(),
-	    new webpack.NoErrorsPlugin()
+	    // new webpack.HotModuleReplacementPlugin(),
+	    // new webpack.NoErrorsPlugin(),
+	    new ExtractTextPlugin("styles.css")
 	],
 	module: {
 		loaders: [
 			{
 				test: /\.js$/,
-		        loaders: [ 'babel' ],
+		        loader: 'babel',
 		        exclude: /node_modules/
 			},
 			{
 		        test: /\.scss$/,
-		        loaders: ["style", "css", "sass"]
+		        loader: ExtractTextPlugin.extract("style", "css!sass"),
       		},
   			{ 
   				test: /\.(png|jpg)$/,
@@ -32,7 +33,7 @@ module.exports = {
   			},
   			{
 		      test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-		      loader: "file-loader"
+		      loader: 'file-loader?name=/assets/[name].[ext]'
 		    }
 		]
 	}
