@@ -29,7 +29,7 @@ module.exports = {
       		},
   			{ 
   				test: /\.(png|jpg)$/,
-  				loader: 'file-loader'
+  				loader: 'file-loader?name=/assets/[name].[ext]'
   			},
   			{
 		      test: /\.(woff|woff2|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
