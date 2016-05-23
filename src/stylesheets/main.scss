@@ -11,6 +11,21 @@ $danger-red: #ec2455;
 
 @import url(https://fonts.googleapis.com/css?family=Fredoka+One);
 
+.em {
+  height: 1.5em;
+  width: 1.5em;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.em-alien {
+	background-image: url('./assets/alien.png')
+}
+
 .center {
 	display: flex;
     flex-direction: column;

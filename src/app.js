@@ -83,7 +83,7 @@ class App extends Component {
 			<div>
 				<div className="header">
 					<div className="title">
-						<h1>Mine Sweeper</h1>
+						<h1>Alien Sweeper</h1>
 					</div>
 					<GameStatus didWin={this.state.didWin} gameOver={this.state.gameOver} startGame={this.startGame.bind(this)}></GameStatus>
 					<div>
