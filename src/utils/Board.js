@@ -52,7 +52,10 @@ export class Tile {
 	check() {
 		// count of how many tiles have been checked (used to track win condition)
 		let count = 1
-		this.checked = true
+		if (!this.wasRightClicked) {
+			this.checked = true	
+		}
+		
 		if (this.adjacentMines === 0) {
 			this.edges.forEach((edge)=>{
 				// only check those tiles that have been been checked yet

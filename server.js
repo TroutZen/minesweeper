@@ -1,6 +1,6 @@
-var webpack = require('webpack')
+// var webpack = require('webpack')
 var express = require('express')
-var config = require('./config.js')('development');
+// var config = require('./config.js')('development');
 var path = require('path')
 var app = require('express')()
 var port = process.env.PORT || 3000;
@@ -8,7 +8,7 @@ var port = process.env.PORT || 3000;
 // var webpackDevMiddleware = require('webpack-dev-middleware')
 // var webpackHotMiddleware = require('webpack-hot-middleware')
 
-var compiler = webpack(config)
+// var compiler = webpack(config)
 
 // todo: make this config dependent on environment
 // app.use(webpackDevMiddleware(compiler, {}))
