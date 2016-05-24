@@ -1,4 +1,3 @@
-// TODO: export all components from index.js and import from there
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Game } from './components/game'

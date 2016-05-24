@@ -3,16 +3,19 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-	entry: './src/app.js',
+	entry: __dirname + '/src/app.js',
 	output: {
-		path:  './public',
+		path:  __dirname + '/public',
 		filename: 'bundle.js'
 	},
-	// watch: true,
-	// devtool: 'source-map',
+	watch: true,
+	devtool: 'source-map',
+	devServer: {
+        contentBase: "./public"
+    },
 	plugins: [
 	    new webpack.optimize.OccurenceOrderPlugin(), // Webpack 1.0
-	    // new webpack.HotModuleReplacementPlugin(),
+	    new webpack.HotModuleReplacementPlugin(),
 	    // new webpack.NoErrorsPlugin(),
 	    new ExtractTextPlugin("styles.css")
 	],
@@ -20,7 +23,10 @@ module.exports = {
 		loaders: [
 			{
 				test: /\.js$/,
-		        loader: 'babel',
+		        loader: 'babel-loader',
+      			query: {
+			        presets: ["es2015", "react"]
+      			},
 		        exclude: /node_modules/
 			},
 			{

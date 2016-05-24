@@ -80,7 +80,22 @@ export class Game extends React.Component {
 		this.setState({
 			flagsRemaining: count
 		})
-		
+	}
+
+	toggleRightClicked(location) {
+		// location should be provided by the boardTile
+		let tile = this.state.index[location]
+		let clicked = !tile.wasRightClicked
+		let adjustment =  clicked ? -1 : 1
+		let currentCount = this.getFlagsRemaining()
+		let adjustedCount = currentCount + adjustment
+			
+		if (adjustedCount >= 0 && adjustedCount <= this.state.size) {
+			tile.wasRightClicked = clicked
+			// because the updateFlags causes a re-render, we dont need to render for the update to the tile state
+			// and since we are not using immutable state objects we would have had to force the re-render to show show the flag
+			this.updateFlags(adjustment)
+		}
 	}
 
 	checkTile(location) {
@@ -117,7 +132,7 @@ export class Game extends React.Component {
 		for (let i = 0; i < size; i++) {
 			let colNum = i;
 			let location = '' + rowNum + colNum
-			tiles.push(<BoardTile key={i} index={this.state.index} location={location} size={this.state.size} checkTile={this.checkTile.bind(this)} gameStatus={this.props.gameStatus} disableBoard={this.state.disableBoard} updateFlags={this.updateFlags.bind(this)} getFlagsRemaining={this.getFlagsRemaining.bind(this)}></BoardTile>)
+			tiles.push(<BoardTile key={i} index={this.state.index} location={location} size={this.state.size} checkTile={this.checkTile.bind(this)} newGame={this.props.newGame} disableBoard={this.state.disableBoard} updateFlags={this.updateFlags.bind(this)} getFlagsRemaining={this.getFlagsRemaining.bind(this)} toggleRightClicked={this.toggleRightClicked.bind(this)}></BoardTile>)
 		}
 
 		return (

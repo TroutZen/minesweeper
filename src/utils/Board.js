@@ -14,6 +14,7 @@ export class Tile {
 		this.col = parseInt(location.substr(1,2))
 		this.checked = false
 		this.wasClicked = false
+		this.wasRightClicked = false // used for determining if a flag should be shown
 		// initialized to value of 0 and set when game state is initialized
 		this.adjacentMines = 0
 
@@ -203,7 +204,6 @@ export class Tile {
 	
 		for (let row = 0; row < size; row++) {
 			for (let col = 0; col < size; col++) {
-				console.log(row + col)
 				indices['' + row + col] = void 0
 			}
 		}
