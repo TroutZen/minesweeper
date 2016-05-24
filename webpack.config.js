@@ -8,14 +8,14 @@ module.exports = {
 		path:  __dirname + '/public',
 		filename: 'bundle.js'
 	},
-	watch: true,
-	devtool: 'source-map',
-	devServer: {
-        contentBase: "./public"
-    },
+	// watch: true,
+	// devtool: 'source-map',
+	// devServer: {
+ //        contentBase: "./public"
+ //    },
 	plugins: [
 	    new webpack.optimize.OccurenceOrderPlugin(), // Webpack 1.0
-	    new webpack.HotModuleReplacementPlugin(),
+	    // new webpack.HotModuleReplacementPlugin(),
 	    // new webpack.NoErrorsPlugin(),
 	    new ExtractTextPlugin("styles.css")
 	],
